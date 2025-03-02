@@ -268,7 +268,9 @@ export const Dashboard = () => {
 
                         <div className="flex flex-wrap gap-2 justify-between">
                             <div className="flex flex-wrap gap-2">
-                                <button className={`${purpleButtonClass} text-sm px-3 py-1 rounded-full`}>Schedule</button>
+                                <Link to="/schedule" className={`${purpleButtonClass} text-sm px-3 py-1 rounded-full inline-block text-center`}>
+                                    Schedule
+                                </Link>
                                 <button className={`${purpleButtonClass} text-sm px-3 py-1 rounded-full`}>Resources</button>
                                 <button className={`${purpleButtonClass} text-sm px-3 py-1 rounded-full`}>Chat</button>
                                 <button className={`${purpleButtonClass} text-sm px-3 py-1 rounded-full`}>Help</button>

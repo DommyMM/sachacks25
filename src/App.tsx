@@ -4,6 +4,7 @@ import { TeamDashboard } from './pages/TeamDashboard';
 import { ThemeProvider, useTheme } from './contexts/Theme';
 import Sidebar from './components/Sidebar';
 import Schedule from './pages/Schedule';
+import FindTeam from './pages/FindTeam';
 
 const AppContent = () => {
   const { darkMode } = useTheme();
@@ -18,9 +19,7 @@ const AppContent = () => {
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/team-dashboard" element={<TeamDashboard/>} />
-            <Route path="/find-team" element={
-              <div className="p-8 text-center">Team Finder Page (Coming Soon)</div>
-            } />
+            <Route path="/find-team" element={<FindTeam />} />
             <Route path="/team/:id" element={
               <div className="p-8 text-center">Team Page (Coming Soon)</div>
             } />

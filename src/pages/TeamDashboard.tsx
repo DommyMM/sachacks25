@@ -130,39 +130,43 @@ export const TeamDashboard = () => {
     };
 
     // Dark mode styling classes
+    const pageBackground = darkMode ? "bg-[#14161F]" : "bg-gray-100";
+
     const cardClass = darkMode 
-        ? "bg-gray-800 text-white" 
-        : "bg-white";
-    
+        ? "bg-[#1C2030] text-white shadow-lg" 
+        : "bg-white shadow";
+
     const subtextClass = darkMode 
-        ? "text-gray-300" 
+        ? "text-[#A0AEC0]" 
         : "text-gray-600";
-    
+
     const badgeClass = darkMode 
-        ? "bg-gray-700 text-gray-300" 
-        : "bg-gray-200 text-gray-700";
-    
+        ? "bg-[#7E22CE] text-white" 
+        : "bg-purple-100 text-purple-800";
+
     const borderClass = darkMode 
-        ? "border-gray-700" 
+        ? "border-[#2D3348]" 
         : "border-gray-200";
-    
+
     const pillBadgeClass = darkMode
-        ? "bg-blue-900 text-blue-300"
-        : "bg-blue-100 text-blue-700";
-    
-    const primaryButtonClass = darkMode
-        ? "bg-blue-800 hover:bg-blue-700 text-white"
-        : "bg-blue-600 hover:bg-blue-700 text-white";
-    
-    const secondaryButtonClass = darkMode
-        ? "bg-gray-700 hover:bg-gray-600 text-white"
-        : "bg-gray-200 hover:bg-gray-300 text-gray-800";
+        ? "bg-[#2D3348] text-[#6598FC]"
+        : "bg-blue-100 text-blue-600";
+
+    const statusBadgeClass = "bg-[#DF52FF] text-black";
+
+    const greenButtonClass = darkMode
+        ? "bg-[#9AF693] hover:bg-[#8AE683] text-[#14161F] cursor-pointer transition-all hover:shadow-md"
+        : "bg-green-500 hover:bg-green-600 text-white cursor-pointer transition-all hover:shadow-md";
+        
+    const purpleButtonClass = darkMode
+        ? "bg-[#B975F3] hover:bg-[#A965E3] text-white cursor-pointer transition-all hover:shadow-md"
+        : "bg-purple-600 hover:bg-purple-700 text-white cursor-pointer transition-all hover:shadow-md";
     
     return (
-        <div className="p-6">
+        <div className={`${pageBackground} p-6`}>
             <div className="mb-6">
-                <h1 className="text-2xl font-bold">Team Dashboard</h1>
-                <p className={subtextClass}>Browse for all team information</p>
+                <h1 className="text-4xl text-[#0b70ec] font-bold">Team Dashboard</h1>
+                <p className={subtextClass}>Find project details, team members, member requests, and more.</p>
             </div>
             
             {/* Team Overview Card */}
@@ -171,7 +175,7 @@ export const TeamDashboard = () => {
                     <div>
                         <h2 className="text-2xl font-bold">{team.name}</h2>
                         <div className="flex items-center mt-2">
-                            <span className={`${pillBadgeClass} px-2 py-1 rounded-full text-xs mr-4`}>
+                            <span className={`${statusBadgeClass} px-2 py-1 rounded-full text-xs mr-4`}>
                                 {team.status}
                             </span>
                             <div className="flex items-center text-sm">
@@ -189,7 +193,8 @@ export const TeamDashboard = () => {
             {/* Project Details */}
             <div className={`${cardClass} rounded-lg shadow-md p-6 mb-6`}>
                 <h2 className="text-xl font-bold mb-4 flex items-center">
-                    <Star className="w-5 h-5 mr-2" /> Project Details
+                    <Star className="w-5 h-5 mr-2" fill={darkMode ? "#6598FC" : "#4F46E5"} stroke={darkMode ? "#6598FC" : "#4F46E5"}/>
+                    Project Details
                 </h2>
                 <p className={`${subtextClass} mb-4`}>{team.description}</p>
                 
@@ -248,9 +253,9 @@ export const TeamDashboard = () => {
                                     <p className={`text-sm ${subtextClass}`}>{member.role}</p>
                                 </div>
                             </div>
-                            <div className="flex flex-wrap gap-1 mt-2">
+                            <div className="flex flex-wrap gap-2 mt-2">
                                 {member.skills.map((skill, i) => (
-                                    <span key={i} className={`${badgeClass} text-xs px-2 py-0.5 rounded`}>
+                                    <span key={i} className={`${badgeClass} text-xs px-2 py-1 rounded-full`}>
                                         {skill}
                                     </span>
                                 ))}
@@ -263,7 +268,7 @@ export const TeamDashboard = () => {
                         <h3 className="font-medium mb-2">Looking For</h3>
                         <div className="flex flex-wrap gap-2">
                             {team.lookingFor.map((role, index) => (
-                                <span key={index} className="bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300 px-3 py-1 rounded-full text-xs">
+                                <span key={index} className={`${badgeClass} px-3 py-1 rounded-full text-xs`}>
                                     {role}
                                 </span>
                             ))}
@@ -320,16 +325,12 @@ export const TeamDashboard = () => {
                             </div>
                             
                             <div className="flex gap-2">
-                                <button 
-                                    onClick={() => acceptRequest(request.id)} 
-                                    className={`${primaryButtonClass} px-4 py-2 rounded font-medium flex-1`}
-                                >
-                                    Accept
+                                <button onClick={() => acceptRequest(request.id)} 
+                                    className={`${greenButtonClass} px-4 py-2 rounded-full font-medium flex-1 flex items-center justify-center hover:translate-y-[-2px]`}>
+                                    Accept →
                                 </button>
-                                <button 
-                                    onClick={() => rejectRequest(request.id)} 
-                                    className={`${secondaryButtonClass} px-4 py-2 rounded font-medium flex-1`}
-                                >
+                                <button onClick={() => rejectRequest(request.id)} 
+                                    className={`${purpleButtonClass} px-4 py-2 rounded-full font-medium flex-1 flex items-center justify-center hover:translate-y-[-2px]`}>
                                     Reject
                                 </button>
                             </div>
@@ -343,16 +344,16 @@ export const TeamDashboard = () => {
                 <h2 className="text-xl font-bold mb-4">Team Management</h2>
                 
                 <div className="space-y-3">
-                    <button className="w-full py-3 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-white rounded font-medium transition-colors">
-                        Edit Team
+                    <button className={`w-full py-3 px-4 ${purpleButtonClass} rounded-full font-medium transition-colors flex items-center justify-center`}>
+                        <Edit className="w-4 h-4 mr-2" /> Edit Team
                     </button>
                     
-                    <button className="w-full py-3 bg-gray-500 hover:bg-gray-600 text-white rounded font-medium transition-colors">
-                        Invite Members
+                    <button className={`w-full py-3 px-4 ${purpleButtonClass} rounded-full font-medium transition-colors flex items-center justify-center`}>
+                        <Plus className="w-4 h-4 mr-2" /> Invite Members
                     </button>
                     
-                    <button className="w-full py-3 bg-gray-800 hover:bg-gray-900 dark:bg-gray-900 dark:hover:bg-black text-white rounded font-medium transition-colors flex items-center justify-center">
-                        <MessageSquare className="w-4 h-4 mr-2" /> Team Chat
+                    <button className={`w-full py-3 px-4 ${greenButtonClass} rounded-full font-medium transition-colors flex items-center justify-center`}>
+                        <MessageSquare className="w-4 h-4 mr-2" /> Team Chat →
                     </button>
                 </div>
             </div>

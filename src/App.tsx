@@ -1,7 +1,9 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Dashboard } from './pages/Dashboard';
+import { TeamDashboard } from './pages/TeamDashboard';
 import { ThemeProvider, useTheme } from './contexts/Theme';
 import Sidebar from './components/Sidebar';
+import Schedule from './pages/Schedule';
 
 const AppContent = () => {
   const { darkMode } = useTheme();
@@ -15,9 +17,7 @@ const AppContent = () => {
         <main className="min-h-screen pt-16 lg:pt-0">
           <Routes>
             <Route path="/" element={<Dashboard />} />
-            <Route path="/team-dashboard" element={
-              <div className="p-8 text-center">Team Dashboard (Coming Soon)</div>
-            } />
+            <Route path="/team-dashboard" element={<TeamDashboard/>} />
             <Route path="/find-team" element={
               <div className="p-8 text-center">Team Finder Page (Coming Soon)</div>
             } />
@@ -27,6 +27,7 @@ const AppContent = () => {
             <Route path="/chat" element={
               <div className="p-8 text-center">Chat Page (Coming Soon)</div>
             } />
+            <Route path="/schedule" element={ <Schedule />} />
             <Route path="/help" element={
               <div className="p-8 text-center">Help Page (Coming Soon)</div>
             } />

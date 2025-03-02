@@ -1,23 +1,46 @@
-import { Calendar, Clock } from 'lucide-react';
+import { Calendar, Clock, ExternalLink } from 'lucide-react';
 import { useTheme } from '../contexts/Theme';
+import { Link } from 'react-router-dom';
 
-const Dashboard = () => {
+export const Dashboard = () => {
     const { darkMode } = useTheme();
     
-    // Mock data
+    // Enhanced mock data with realistic information
     const user = {
         name: "Alex",
         fullName: "Alex Chen",
         role: "Full Stack Developer",
+        avatar: "https://randomuser.me/api/portraits/men/44.jpg",
         skills: ["React", "Node.js", "Python"],
         interests: ["ChatGPT Wrappers", "Machine Learning", "Anime Women"],
         topics: ["AI/ML", "Web Development"]
     };
     
     const teamMembers = [
-        { name: "Alex Chen", role: "Full Stack Developer", topics: ["AI/ML", "Web Development"] },
-        { name: "Alex Chen", role: "Full Stack Developer", topics: ["AI/ML", "Web Development"] },
-        { name: "Alex Chen", role: "Full Stack Developer", topics: ["AI/ML", "Web Development"] }
+        { 
+            name: "Alex Chen", 
+            role: "Full Stack Developer", 
+            avatar: "https://randomuser.me/api/portraits/men/44.jpg",
+            topics: ["Health Tech", "Education"] 
+        },
+        { 
+            name: "Marcus Chen", 
+            role: "UX/UI Designer", 
+            avatar: "https://randomuser.me/api/portraits/men/32.jpg",
+            topics: ["Design Systems", "Mobile UX"] 
+        },
+        { 
+            name: "Aisha Kumar", 
+            role: "Data Scientist", 
+            avatar: "https://randomuser.me/api/portraits/women/68.jpg",
+            topics: ["AI/ML", "NLP"] 
+        },
+        { 
+            name: "Tyler Johnson", 
+            role: "Mobile Developer", 
+            avatar: "https://randomuser.me/api/portraits/men/17.jpg",
+            topics: ["React Native", "iOS"] 
+        }
     ];
     
     const hackathonInfo = {
@@ -146,7 +169,17 @@ const Dashboard = () => {
                     <div className={`${cardClass} rounded-lg p-6`}>
                         <h2 className="text-lg font-bold mb-4">Your Profile</h2>
                         <div className="flex items-center mb-4">
-                            <div className={`w-12 h-12 ${darkMode ? 'bg-gray-700' : 'bg-gray-200'} rounded-full mr-3`}></div>
+                            <div className="w-12 h-12 rounded-full mr-3 overflow-hidden">
+                                <img 
+                                    src={user.avatar} 
+                                    alt={user.fullName} 
+                                    className="w-full h-full object-cover"
+                                    onError={(e) => {
+                                        e.currentTarget.onerror = null;
+                                        e.currentTarget.src = `https://ui-avatars.com/api/?name=${user.fullName.replace(' ', '+')}&background=random`;
+                                    }}
+                                />
+                            </div>
                             <div>
                                 <h3 className="font-medium">{user.fullName}</h3>
                                 <p className={`text-sm ${subtextClass}`}>{user.role}</p>
@@ -199,7 +232,11 @@ const Dashboard = () => {
                         <div className={`${darkMode ? 'bg-gray-700' : 'bg-gray-100'} p-3 rounded-lg flex items-center mb-4`}>
                             <Clock className={`w-4 h-4 mr-2 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`} />
                             <span className="text-sm">Hackathon begins in {hackathonInfo.daysUntil} days</span>
-                            <button className={`ml-auto ${darkMode ? 'text-blue-400' : 'text-blue-600'} text-sm`}>Add to Calendar</button>
+                            <button className={`ml-auto flex items-center ${darkMode ? 'text-blue-400 hover:text-blue-300' : 'text-blue-600 hover:text-blue-700'} text-sm transition-colors`}
+                                onClick={() => alert('Pretending to integrate with Google Calendar')}
+                            >
+                                <span>Add to Calendar</span>
+                            </button>
                         </div>
                         
                         <div className="flex flex-wrap gap-2">
@@ -216,7 +253,11 @@ const Dashboard = () => {
                             <h2 className="text-lg font-bold flex items-center">
                                 <Calendar className="w-5 h-5 mr-2" /> Event Schedule
                             </h2>
-                            <button className={`${darkMode ? 'text-blue-400' : 'text-blue-600'} text-sm`}>View Full Schedule</button>
+                            <a href="https://sachacks.io/agenda" target="_blank" rel="noopener noreferrer" 
+                                className={`${darkMode ? 'text-blue-400 hover:text-blue-300' : 'text-blue-600 hover:text-blue-500'} text-sm transition-colors flex items-center`}>
+                                View Full Schedule
+                                <ExternalLink className="w-4 h-4 ml-1" />
+                            </a>
                         </div>
                         
                         <div className="space-y-4">
@@ -245,13 +286,23 @@ const Dashboard = () => {
                             {teamMembers.map((member, index) => (
                                 <div key={index} className={`border-b ${borderClass} pb-3 last:border-0 last:pb-0`}>
                                     <div className="flex items-center mb-2">
-                                        <div className={`w-10 h-10 ${darkMode ? 'bg-gray-700' : 'bg-gray-200'} rounded-full mr-3`}></div>
+                                        <div className="w-10 h-10 rounded-full mr-3 overflow-hidden">
+                                            <img 
+                                                src={member.avatar} 
+                                                alt={member.name} 
+                                                className="w-full h-full object-cover"
+                                                onError={(e) => {
+                                                    e.currentTarget.onerror = null;
+                                                    e.currentTarget.src = `https://ui-avatars.com/api/?name=${member.name.replace(' ', '+')}&background=random`;
+                                                }}
+                                            />
+                                        </div>
                                         <div>
                                             <h3 className="font-medium">{member.name}</h3>
                                             <p className={`text-sm ${subtextClass}`}>{member.role}</p>
                                         </div>
                                     </div>
-                                    <div className="flex gap-1">
+                                    <div className="flex flex-wrap gap-1">
                                         {member.topics.map((topic, i) => (
                                             <span key={i} className={`${darkMode ? 'bg-gray-700' : 'bg-gray-100'} ${darkMode ? 'text-gray-300' : 'text-gray-700'} text-xs px-2 py-0.5 rounded`}>
                                                 {topic}
@@ -262,9 +313,9 @@ const Dashboard = () => {
                             ))}
                         </div>
                         <div className="mt-4">
-                            <button className={`${darkMode ? 'text-blue-400' : 'text-blue-600'} font-medium text-sm flex items-center justify-end w-full`}>
+                            <Link to="/team-dashboard" className={`${darkMode ? 'text-blue-400' : 'text-blue-600'} font-medium text-sm flex items-center justify-end w-full hover:underline`}>
                                 Manage Team →
-                            </button>
+                            </Link>
                         </div>
                     </div>
                     
@@ -291,5 +342,3 @@ const Dashboard = () => {
         </div>
     );
 };
-
-export default Dashboard;

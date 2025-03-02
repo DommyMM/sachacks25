@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Home, Users, User, Calendar, MessageSquare, Bell, Moon, Sun, Menu, X } from 'lucide-react';
+import { Home, Users, User, MessageSquare, Bell, Moon, Sun, Menu, X } from 'lucide-react';
 import { useTheme } from '../contexts/Theme';
 
 const Sidebar = () => {
@@ -9,10 +9,9 @@ const Sidebar = () => {
 
     const navItems = [
         { name: 'Dashboard', path: '/', icon: <Home className="w-5 h-5" /> },
+        { name: 'Team Dashboard', path: '/team-dashboard', icon: <User className="w-5 h-5" /> },
         { name: 'Find Team', path: '/find-team', icon: <Users className="w-5 h-5" /> },
-        { name: 'Owner Dashboard', path: '/owner-dashboard', icon: <User className="w-5 h-5" /> },
         { name: 'Chat', path: '/chat', icon: <MessageSquare className="w-5 h-5" /> },
-        { name: 'Schedule', path: '/schedule', icon: <Calendar className="w-5 h-5" /> },
         { name: 'Help', path: '/help', icon: <Bell className="w-5 h-5" /> },
     ];
 

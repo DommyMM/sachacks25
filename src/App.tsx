@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Dashboard from './pages/Dashboard';
+import { Dashboard } from './pages/Dashboard';
 import { ThemeProvider, useTheme } from './contexts/Theme';
 import Sidebar from './components/Sidebar';
 
@@ -15,17 +15,14 @@ const AppContent = () => {
         <main className="min-h-screen pt-16 lg:pt-0">
           <Routes>
             <Route path="/" element={<Dashboard />} />
+            <Route path="/team-dashboard" element={
+              <div className="p-8 text-center">Team Dashboard (Coming Soon)</div>
+            } />
+            <Route path="/find-team" element={
+              <div className="p-8 text-center">Team Finder Page (Coming Soon)</div>
+            } />
             <Route path="/team/:id" element={
               <div className="p-8 text-center">Team Page (Coming Soon)</div>
-            } />
-            <Route path="/profile" element={
-              <div className="p-8 text-center">Profile Page (Coming Soon)</div>
-            } />
-            <Route path="/schedule" element={
-              <div className="p-8 text-center">Schedule Page (Coming Soon)</div>
-            } />
-            <Route path="/resources" element={
-              <div className="p-8 text-center">Resources Page (Coming Soon)</div>
             } />
             <Route path="/chat" element={
               <div className="p-8 text-center">Chat Page (Coming Soon)</div>
@@ -33,8 +30,8 @@ const AppContent = () => {
             <Route path="/help" element={
               <div className="p-8 text-center">Help Page (Coming Soon)</div>
             } />
-            <Route path="/find-team" element={
-              <div className="p-8 text-center">Team Finder Page (Coming Soon)</div>
+            <Route path="/resources" element={
+              <div className="p-8 text-center">Resources Page (Coming Soon)</div>
             } />
           </Routes>
         </main>

@@ -1,97 +1,18 @@
 import { Users, Star, Edit, Plus, MessageSquare } from 'lucide-react';
 import { useTheme } from '../contexts/Theme';
 import { useState } from 'react';
-
-interface TeamMember {
-    name: string;
-    role: string;
-    avatar: string;
-    skills: string[];
-}
-
-interface JoinRequest {
-    id: string;
-    name: string;
-    role: string;
-    avatar: string;
-    skills: string[];
-    message: string;
-}
-
-interface TeamData {
-    name: string;
-    status: string;
-    memberCount: number;
-    maxMembers: number;
-    description: string;
-    goal: string;
-    topics: string[];
-    repository: string;
-    members: TeamMember[];
-    lookingFor: string[];
-    joinRequests: JoinRequest[];
-}
+import { Team, teamsData } from '../components/team';
 
 export const TeamDashboard = () => {
     const { darkMode } = useTheme();
     
-    // Mock team data with useState for reactivity and proper typing
-    const [team, setTeam] = useState<TeamData>({
-        name: "CodeCrushers",
-        status: "Forming",
-        memberCount: 2,
-        maxMembers: 4,
-        description: "Building an AI-powered team matching app for hackathons",
-        goal: "Learning and Winning",
-        topics: ["AI/ML", "Web Development"],
-        repository: "https://www.github.com/codecrusher/teacm-match",
-        members: [
-            {
-                name: "Alex Chen",
-                role: "Full Stack Developer",
-                avatar: "https://randomuser.me/api/portraits/men/44.jpg",
-                skills: ["React", "Node.js", "Python"]
-            },
-            {
-                name: "Jamie Smith",
-                role: "UX Designer",
-                avatar: "https://randomuser.me/api/portraits/women/32.jpg",
-                skills: ["Figma", "UI Design", "User Research"]
-            }
-        ],
-        lookingFor: ["ML Engineer", "Backend Developer"],
-        joinRequests: [
-            {
-                id: "req1",
-                name: "Taylor Wong",
-                role: "Data Scientist",
-                avatar: "https://randomuser.me/api/portraits/women/68.jpg",
-                skills: ["TensorFlow", "Python", "Data Analysis"],
-                message: "I'd love to join your team! I have experience in ML and can help with AI-matching algorithm!"
-            },
-            {
-                id: "req2",
-                name: "Jordan Patel",
-                role: "Backend Developer",
-                avatar: "https://randomuser.me/api/portraits/men/55.jpg",
-                skills: ["Node.js", "MongoDB", "Express"],
-                message: "Looking to join a motivated team. I can help with your backend infrastructure!"
-            },
-            {
-                id: "req3",
-                name: "Casey Rivera",
-                role: "ML Engineer",
-                avatar: "https://randomuser.me/api/portraits/women/22.jpg",
-                skills: ["PyTorch", "Deep Learning", "Computer Vision"],
-                message: "Interested in your project! I specialize in ML model architecture and optimization."
-            }
-        ]
-    });
+    // Use the first team from the shared data as the current user's team
+    const [team, setTeam] = useState<Team>(teamsData[0]);
     
     // Function to accept join requests with proper typing
     const acceptRequest = (requestId: string): void => {
         // Find the request in the joinRequests array
-        const requestToAccept = team.joinRequests.find(request => request.id === requestId);
+        const requestToAccept = team.joinRequests?.find(request => request.id === requestId);
         
         if (requestToAccept) {
             // Check if adding would exceed the max team size
@@ -113,7 +34,7 @@ export const TeamDashboard = () => {
                 // Increment member count
                 memberCount: team.memberCount + 1,
                 // Remove from joinRequests
-                joinRequests: team.joinRequests.filter(request => request.id !== requestId),
+                joinRequests: team.joinRequests?.filter(request => request.id !== requestId) || [],
                 // Remove role from looking for if it matches
                 lookingFor: team.lookingFor.filter(role => role !== requestToAccept.role)
             });
@@ -125,7 +46,7 @@ export const TeamDashboard = () => {
         // Remove the request from joinRequests
         setTeam({
             ...team,
-            joinRequests: team.joinRequests.filter(request => request.id !== requestId)
+            joinRequests: team.joinRequests?.filter(request => request.id !== requestId) || []
         });
     };
 
@@ -278,7 +199,7 @@ export const TeamDashboard = () => {
             </div>
             
             {/* Join Requests */}
-            {team.joinRequests.length > 0 && (
+            {team.joinRequests && team.joinRequests.length > 0 && (
                 <div className={`${cardClass} rounded-lg shadow-md p-6 mb-6`}>
                     <h2 className="text-xl font-bold mb-4 flex items-center">
                         <Plus className="w-5 h-5 mr-2" /> Join Requests
@@ -286,10 +207,10 @@ export const TeamDashboard = () => {
                             {team.joinRequests.length}
                         </span>
                     </h2>
-                    
+
                     {team.joinRequests.map((request, index) => (
                         <div key={request.id} className={`mb-6 ${
-                            index !== team.joinRequests.length - 1 ? `border-b ${borderClass} pb-6` : ''
+                            index !== (team.joinRequests?.length ?? 0) - 1 ? `border-b ${borderClass} pb-6` : ''
                         }`}>
                             <div className="flex items-center mb-2">
                                 <div className="w-10 h-10 rounded-full mr-3 overflow-hidden">
@@ -311,7 +232,7 @@ export const TeamDashboard = () => {
                             
                             <div className="flex flex-wrap gap-1 mb-3">
                                 {request.skills.map((skill, i) => (
-                                    <span key={i} className={`${badgeClass} text-xs px-2 py-0.5 rounded`}>
+                                    <span key={i} className={`${badgeClass} text-xs px-2 py-0.5 rounded-full`}>
                                         {skill}
                                     </span>
                                 ))}

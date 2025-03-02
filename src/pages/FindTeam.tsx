@@ -2,28 +2,12 @@ import { useState } from 'react';
 import { Star, Users, ChevronDown, Search, Filter, SortDesc } from 'lucide-react';
 import { useTheme } from '../contexts/Theme';
 import { Link } from 'react-router-dom';
+import { teamsData } from '../components/team';
 
 interface TeamFilters {
     status: string;
     lookingFor: string[];
     interests: string[];
-}
-
-interface TeamMember {
-    name: string;
-    avatar: string;
-}
-
-interface Team {
-    id: string;
-    name: string;
-    description: string;
-    matchScore: number;
-    members: { current: number; max: number };
-    status: string;
-    topics: string[];
-    lookingFor: string[];
-    creator: TeamMember;
 }
 
 const FindTeam = () => {
@@ -38,79 +22,8 @@ const FindTeam = () => {
         interests: []
     });
 
-    // Update mock teams data with consistent avatars
-    const teams: Team[] = [
-        {
-            id: "team1",
-            name: "Code Crushers",
-            description: "Building an AI-powered team matching app for hackathons",
-            matchScore: 92,
-            members: { current: 2, max: 4 },
-            status: "Forming",
-            topics: ["AI/ML", "Web Development"],
-            lookingFor: ["Backend Developer", "UX/UI Designer"],
-            creator: {
-                name: "Alex Chen",
-                avatar: "https://randomuser.me/api/portraits/men/44.jpg"
-            }
-        },
-        {
-            id: "team2",
-            name: "AR Study Buddy",
-            description: "Augmented reality app to help students visualize concepts",
-            matchScore: 83,
-            members: { current: 2, max: 4 },
-            status: "Forming",
-            topics: ["AI/ML", "Web Development"],
-            lookingFor: ["Backend Developer", "UX/UI Designer"],
-            creator: {
-                name: "Jamie Smith",
-                avatar: "https://randomuser.me/api/portraits/women/32.jpg"
-            }
-        },
-        {
-            id: "team3",
-            name: "Health Tracker Pro",
-            description: "Mobile app to track health metrics and provide personalized insights",
-            matchScore: 78,
-            members: { current: 3, max: 4 },
-            status: "Forming",
-            topics: ["Mobile", "Health Tech"],
-            lookingFor: ["iOS Developer"],
-            creator: {
-                name: "Aisha Kumar",
-                avatar: "https://randomuser.me/api/portraits/women/68.jpg"
-            }
-        },
-        {
-            id: "team4",
-            name: "EcoTech Solutions",
-            description: "Sustainability platform to track and reduce carbon footprint",
-            matchScore: 71,
-            members: { current: 2, max: 3 },
-            status: "Forming",
-            topics: ["Sustainability", "Web Development"],
-            lookingFor: ["Frontend Developer", "Data Scientist"],
-            creator: {
-                name: "Tyler Johnson",
-                avatar: "https://randomuser.me/api/portraits/men/17.jpg"
-            }
-        },
-        {
-            id: "team5",
-            name: "FinTech Innovators",
-            description: "Financial technology solution for personal budget management",
-            matchScore: 65,
-            members: { current: 4, max: 4 },
-            status: "Full",
-            topics: ["Finance", "Web Development"],
-            lookingFor: [],
-            creator: {
-                name: "Jordan Lee",
-                avatar: "https://randomuser.me/api/portraits/men/55.jpg"
-            }
-        }
-    ];
+    // Use the shared teams data instead of local data
+    const teams = teamsData;
     
     // Available filters
     const availableRoles = ["Frontend Developer", "Backend Developer", "UX/UI Designer", "Data Scientist", "Mobile Developer", "iOS Developer", "Android Developer"];
@@ -192,7 +105,9 @@ const FindTeam = () => {
         let comparison = 0;
         
         if (sortBy === 'match') {
-            comparison = b.matchScore - a.matchScore;
+            const scoreA = a.matchScore ?? 0;
+            const scoreB = b.matchScore ?? 0;
+            comparison = scoreB - scoreA;
         }
         if (sortBy === 'name') {
             comparison = a.name.localeCompare(b.name);
@@ -371,7 +286,7 @@ const FindTeam = () => {
                             <div className="flex flex-wrap gap-4 mb-4">
                                 <div className="flex items-center">
                                     <Users className="w-5 h-5 mr-1" />
-                                    <span>{team.members.current}/{team.members.max} members</span>
+                                    <span>{team.memberCount}/{team.maxMembers} members</span>
                                 </div>
                                 
                                 <span className={`${statusBadgeClass} px-3 py-1 rounded-full text-sm`}>
@@ -422,7 +337,7 @@ const FindTeam = () => {
                                 
                                 <Link 
                                     to={`/team/${team.id}`} 
-                                    className={`${primaryButtonClass} px-4 py-2 rounded-full text-center ml-auto`}
+                                    className={`${primaryButtonClass} px-4 py-2 rounded-full text-center ml-auto flex items-center justify-center`}
                                 >
                                     View Team →
                                 </Link>

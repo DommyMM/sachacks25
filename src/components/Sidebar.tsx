@@ -1,9 +1,6 @@
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { 
-    Home, Users, User, Calendar, BookOpen, MessageSquare, 
-    HelpCircle, Moon, Sun, Menu, X 
-} from 'lucide-react';
+import { Home, Users, User, Calendar, MessageSquare, Bell, Moon, Sun, Menu, X } from 'lucide-react';
 import { useTheme } from '../contexts/Theme';
 
 const Sidebar = () => {
@@ -13,11 +10,10 @@ const Sidebar = () => {
     const navItems = [
         { name: 'Dashboard', path: '/', icon: <Home className="w-5 h-5" /> },
         { name: 'Find Team', path: '/find-team', icon: <Users className="w-5 h-5" /> },
-        { name: 'Profile', path: '/profile', icon: <User className="w-5 h-5" /> },
-        { name: 'Schedule', path: '/schedule', icon: <Calendar className="w-5 h-5" /> },
-        { name: 'Resources', path: '/resources', icon: <BookOpen className="w-5 h-5" /> },
+        { name: 'Owner Dashboard', path: '/owner-dashboard', icon: <User className="w-5 h-5" /> },
         { name: 'Chat', path: '/chat', icon: <MessageSquare className="w-5 h-5" /> },
-        { name: 'Help', path: '/help', icon: <HelpCircle className="w-5 h-5" /> },
+        { name: 'Schedule', path: '/schedule', icon: <Calendar className="w-5 h-5" /> },
+        { name: 'Help', path: '/help', icon: <Bell className="w-5 h-5" /> },
     ];
 
     return (
@@ -38,10 +34,10 @@ const Sidebar = () => {
         )}
         
         {/* Sidebar */}
-        <div className={`fixed left-0 top-0 h-full border-r transition-all duration-300 ${
+        <div className={`fixed left-0 top-0 h-full border-r ${
             darkMode ? 'border-gray-700 bg-gray-900' : 'border-gray-200 bg-white'
             } ${
-            sidebarOpen ? 'w-64' : 'w-0 lg:w-64'
+            sidebarOpen ? 'w-64 transition-width duration-300' : 'w-0 lg:w-64 transition-width duration-300'
             }`}
         >
             <div className="flex flex-col h-full">

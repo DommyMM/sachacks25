@@ -1,4 +1,4 @@
-# Hackathon Team Formation App
+# Hackathon Team Formation Platform
 
 ## 🌟 Project Overview
 
